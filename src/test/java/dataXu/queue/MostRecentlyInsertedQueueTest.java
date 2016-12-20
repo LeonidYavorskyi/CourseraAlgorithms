@@ -39,6 +39,11 @@ public class MostRecentlyInsertedQueueTest {
     }
 
     @Test
+    public void offer_null() {
+        assertFalse(mostRecentlyInsertedQueue.offer(null));
+    }
+
+    @Test
     public void poll() {
         fill();
 
@@ -87,11 +92,5 @@ public class MostRecentlyInsertedQueueTest {
     public void create_with_illegal_capacity() {
         new MostRecentlyInsertedQueue(0);
     }
-
-    @Test(expected = NullPointerException.class)
-    public void offer_null() {
-        mostRecentlyInsertedQueue.offer(null);
-    }
-
 
 }

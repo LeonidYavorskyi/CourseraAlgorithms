@@ -31,7 +31,7 @@ public class MostRecentlyInsertedQueue<E> extends AbstractQueue<E> {
     @Override
     public boolean offer(E e) {
         if (e == null) {
-            throw new NullPointerException("You can't add a null into the MostRecentlyInsertedQueue");
+            return false;
         }
 
         Node oldLast = last;
