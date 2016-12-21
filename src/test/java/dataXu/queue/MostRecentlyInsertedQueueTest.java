@@ -5,7 +5,9 @@ import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(JUnit4ClassRunner.class)
 public class MostRecentlyInsertedQueueTest {
@@ -28,64 +30,64 @@ public class MostRecentlyInsertedQueueTest {
     public void offer() {
         fill();
 
-        assertEquals(4, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.size(), is(4));
 
-        mostRecentlyInsertedQueue.offer(55);
-        assertEquals(5, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.offer(55), is(true));
+        assertThat(mostRecentlyInsertedQueue.size(), is(5));
 
-        mostRecentlyInsertedQueue.offer(9);
-        mostRecentlyInsertedQueue.offer(124);
-        assertEquals(5, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.offer(9), is(true));
+        assertThat(mostRecentlyInsertedQueue.offer(124), is(true));
+        assertThat(mostRecentlyInsertedQueue.size(), is(5));
     }
 
     @Test
     public void offer_null() {
-        assertFalse(mostRecentlyInsertedQueue.offer(null));
+        assertThat(mostRecentlyInsertedQueue.offer(null), is(false));
     }
 
     @Test
     public void poll() {
         fill();
 
-        assertEquals(10, mostRecentlyInsertedQueue.poll());
-        assertEquals(3, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.poll(), is(10));
+        assertThat(mostRecentlyInsertedQueue.size(), is(3));
 
-        assertEquals(20, mostRecentlyInsertedQueue.poll());
-        assertEquals(30, mostRecentlyInsertedQueue.poll());
-        assertEquals(1, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.poll(), is(20));
+        assertThat(mostRecentlyInsertedQueue.poll(), is(30));
+        assertThat(mostRecentlyInsertedQueue.size(), is(1));
 
-        assertEquals(40, mostRecentlyInsertedQueue.poll());
-        assertNull(mostRecentlyInsertedQueue.poll());
+        assertThat(mostRecentlyInsertedQueue.poll(), is(40));
+        assertThat(mostRecentlyInsertedQueue.poll(), nullValue());
     }
 
     @Test
     public void peek() {
         fill();
 
-        assertEquals(10, mostRecentlyInsertedQueue.peek());
-        assertEquals(4, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.peek(), is(10));
+        assertThat(mostRecentlyInsertedQueue.size(), is(4));
 
         mostRecentlyInsertedQueue.offer(55);
-        assertEquals(10, mostRecentlyInsertedQueue.peek());
-        assertEquals(5, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.peek(), is(10));
+        assertThat(mostRecentlyInsertedQueue.size(), is(5));
 
         mostRecentlyInsertedQueue.offer(65);
-        assertEquals(20, mostRecentlyInsertedQueue.peek());
-        assertEquals(5, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.peek(), is(20));
+        assertThat(mostRecentlyInsertedQueue.size(), is(5));
 
         mostRecentlyInsertedQueue.clear();
-        assertNull(mostRecentlyInsertedQueue.peek());
+        assertThat(mostRecentlyInsertedQueue.peek(), nullValue());
     }
 
     @Test
     public void clear_and_isEmpty() {
         fill();
 
-        assertFalse(mostRecentlyInsertedQueue.isEmpty());
+        assertThat(mostRecentlyInsertedQueue.isEmpty(), is(false));
 
         mostRecentlyInsertedQueue.clear();
-        assertTrue(mostRecentlyInsertedQueue.isEmpty());
-        assertEquals(0, mostRecentlyInsertedQueue.size());
+        assertThat(mostRecentlyInsertedQueue.isEmpty(), is(true));
+        assertThat(mostRecentlyInsertedQueue.size(), is(0));
     }
 
     @Test(expected = IllegalArgumentException.class)
