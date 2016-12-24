@@ -59,9 +59,11 @@ public class MostRecentlyInsertedQueue<E> extends AbstractQueue<E> {
 
     Node current = first;
     first = current.next;
+    E e = current.value;
+    current.value = null;
     size--;
 
-    return current.value;
+    return e;
   }
 
   @Override
